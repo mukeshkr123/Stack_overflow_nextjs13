@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
 import {
@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { QuestionSchema } from "@/lib/validation";
+import { createQuestion } from "@/lib/actions/question.action";
 
 const type: any = "create";
 
@@ -44,12 +45,13 @@ export function Question() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof QuestionSchema>) {
+  async function onSubmit(values: z.infer<typeof QuestionSchema>) {
     setIsSubmitting(true);
 
     try {
       // make an anync call to your API -> Create a question
       // contain all form data
+      await createQuestion({});
       // navigate to the home page
     } catch (error) {
     } finally {
@@ -104,6 +106,8 @@ export function Question() {
                     // @ts-ignore
                     editorRef.current = editor;
                   }}
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange}
                   initialValue=""
                   init={{
                     height: 350,
