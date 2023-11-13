@@ -19,12 +19,19 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { QuestionSchema } from "@/lib/validation";
 import { createQuestion } from "@/lib/actions/question.action";
+import { usePathname, useRouter } from "next/navigation";
 
 const type: any = "create";
 
+interface Props {
+  mongoUserId: string;
+}
+
 // @ add custom multiple fiels input
 
-export function Question() {
+export function Question({ mongoUserId }: Props) {
+  const router = useRouter();
+  const pathname = usePathname();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -51,8 +58,15 @@ export function Question() {
     try {
       // make an anync call to your API -> Create a question
       // contain all form data
-      await createQuestion({});
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+      });
+
       // navigate to the home page
+      router.push("/");
     } catch (error) {
     } finally {
       setIsSubmitting(false);
