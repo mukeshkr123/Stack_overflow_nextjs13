@@ -5,6 +5,8 @@ import Tag from "@/database/tag.model";
 import { connectToDatabase } from "../mongoose";
 
 export async function createQuestion(params: any) {
+  console.log("Backend clicked", params);
+
   // eslint-disable-next-line no-empty
   try {
     connectToDatabase();
@@ -24,7 +26,7 @@ export async function createQuestion(params: any) {
     for (const tag of tags) {
       const existingTag = await Tag.findOneAndUpdate(
         {
-          name: { $regex: new RegExp(`^${tag}$ , "i`) },
+          name: { $regex: new RegExp(`^${tag}$`, "i") },
         },
         { $setOnInsert: { name: tag }, $push: { question: question._id } },
         { upsert: true, new: true }
@@ -40,5 +42,7 @@ export async function createQuestion(params: any) {
     // Craete an interaction record for the user's  ask_question action
 
     // Increment author's reputation by +5 for creating a question
-  } catch (error) {}
+  } catch (error) {
+    console.error("Error in createQuestion:", error);
+  }
 }

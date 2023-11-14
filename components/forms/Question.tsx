@@ -59,6 +59,8 @@ export function Question({ mongoUserId }: Props) {
     try {
       // make an anync call to your API -> Create a question
       // contain all form data
+      console.log("Form submitted with values:", values);
+
       await createQuestion({
         title: values.title,
         content: values.explanation,
@@ -72,8 +74,6 @@ export function Question({ mongoUserId }: Props) {
     } finally {
       setIsSubmitting(false);
     }
-
-    console.log(values);
   }
 
   const handleInputkeyDown = (
@@ -156,7 +156,7 @@ export function Question({ mongoUserId }: Props) {
                     editorRef.current = editor;
                   }}
                   onBlur={field.onBlur}
-                  onEditorChange={(content) => field.onChange}
+                  onEditorChange={(content) => field.onChange(content)}
                   initialValue=""
                   init={{
                     height: 350,
