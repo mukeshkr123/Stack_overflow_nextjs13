@@ -1,15 +1,15 @@
 "use server";
 
 import Question from "@/database/question.model";
-import { connectToDatabase } from "../mongoose";
 import Tag from "@/database/tag.model";
+import { connectToDatabase } from "../mongoose";
 
 export async function createQuestion(params: any) {
   // eslint-disable-next-line no-empty
   try {
     connectToDatabase();
 
-    const { title, content, tags, author, path } = params;
+    const { title, content, tags, author } = params;
 
     // Create the questions
     const question = await Question.create({

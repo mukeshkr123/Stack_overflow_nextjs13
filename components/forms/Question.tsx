@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { QuestionSchema } from "@/lib/validation";
 import { createQuestion } from "@/lib/actions/question.action";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const type: any = "create";
 
@@ -31,7 +31,6 @@ interface Props {
 
 export function Question({ mongoUserId }: Props) {
   const router = useRouter();
-  const pathname = usePathname();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
