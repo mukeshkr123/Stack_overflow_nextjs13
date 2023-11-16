@@ -14,7 +14,7 @@ export async function getQuestions(params: GetQuestionsParams) {
       .populate({ path: "author", model: User }) // TODO :- populate not working
       .sort({ createdAt: -1 });
 
-    return { questions };
+    return questions;
   } catch (error) {
     console.error("Error in createQuestion:", error);
   }
