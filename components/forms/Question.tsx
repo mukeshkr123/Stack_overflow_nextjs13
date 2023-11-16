@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { QuestionSchema } from "@/lib/validation";
 import { createQuestion } from "@/lib/actions/question.action";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 
@@ -33,6 +33,7 @@ interface Props {
 
 export function Question({ mongoUserId }: Props) {
   const router = useRouter();
+  const pathname = usePathname();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -66,6 +67,7 @@ export function Question({ mongoUserId }: Props) {
         content: values.explanation,
         tags: values.tags,
         author: JSON.parse(mongoUserId),
+        path: pathname,
       });
 
       // navigate to the home page

@@ -5,80 +5,12 @@ import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
+import { getQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 
-const questions = [
-  {
-    _id: "1",
-    title: "Cascading Delete in SQL",
-    tags: [
-      { _id: "1", title: "sql" },
-      { _id: "2", title: "python" },
-    ],
-    author: {
-      _id: "1",
-      name: "Mukesh",
-      picture: "mukesh.jpg",
-    },
-    upvotes: 50000,
-    views: 10000002,
-    answers: [{}],
-    createdAt: new Date("2023-11-01T12:00:00.000Z"),
-  },
-  {
-    _id: "2",
-    title: "Another Question",
-    tags: [
-      { _id: "3", title: "javascript" },
-      { _id: "4", title: "typescript" },
-    ],
-    author: {
-      _id: "2",
-      name: "Alice",
-      picture: "alice.jpg",
-    },
-    upvotes: 100005,
-    views: 200000,
-    answers: [],
-    createdAt: new Date("2021-10-15T10:30:00.000Z"),
-  },
-  {
-    _id: "3",
-    title: "Web Development",
-    tags: [
-      { _id: "5", title: "html" },
-      { _id: "6", title: "css" },
-    ],
-    author: {
-      _id: "3",
-      name: "Bob",
-      picture: "bob.jpg",
-    },
-    upvotes: 5,
-    views: 50,
-    answers: [{}],
-    createdAt: new Date("2021-11-20T08:45:00.000Z"),
-  },
-  {
-    _id: "4",
-    title: "Database Design",
-    tags: [
-      { _id: "7", title: "database" },
-      { _id: "8", title: "design" },
-    ],
-    author: {
-      _id: "4",
-      name: "Carol",
-      picture: "carol.jpg",
-    },
-    upvotes: 8,
-    views: 80,
-    answers: [{}],
-    createdAt: new Date("2022-01-05T14:15:00.000Z"),
-  },
-];
+export default async function Home() {
+  const result = await getQuestions({});
 
-export default function Home() {
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -109,8 +41,8 @@ export default function Home() {
       <div className="mt-10 flex w-full flex-col gap-6">
         {/* looping through questions  */}
 
-        {questions.length > 0 ? (
-          questions.map((question) => (
+        {result?.questions && result.questions.length > 0 ? (
+          result?.questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
